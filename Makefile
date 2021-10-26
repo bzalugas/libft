@@ -6,7 +6,7 @@
 #    By: bzalugas <bzalugas@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/15 16:01:33 by bzalugas          #+#    #+#              #
-#    Updated: 2021/10/26 13:42:12 by bzalugas         ###   ########.fr        #
+#    Updated: 2021/10/26 15:21:11 by bzalugas         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,14 +16,10 @@ SRCS	=	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c ft_memchr.c 
 			ft_strrchr.c ft_strncmp.c ft_strlcpy.c ft_strlcat.c ft_strnstr.c ft_atoi.c \
 			ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c ft_strtrim.c ft_split.c \
 			ft_putchar.c ft_itoa.c ft_strmapi.c ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
-			ft_putnbr_fd.c
-
-BONUS	=	ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
-			ft_lstclear.c ft_lstiter.c ft_lstmap.c
+			ft_putnbr_fd.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
+			ft_lstadd_back.c ft_lstdelone.c ft_lstclear.c ft_lstiter.c ft_lstmap.c
 
 MAIN	=	main.c
-
-OBJB	=	$(BONUS:.c=.o)
 
 OBJM	=	$(MAIN:.c=.o)
 
@@ -34,6 +30,7 @@ OBJS 	= 	$(SRCS:.c=.o)
 NAME	= 	libft.a
 
 CC		= 	clang
+
 CFLAGS	= 	-Wall -Wextra -Werror
 
 AR		= 	ar rc
@@ -54,22 +51,18 @@ DELETE	=	@echo $(RED)"Cleaning $(NAME)"$(END)
 
 all:		$(NAME)
 
-#compilation des bonus en meme temps (pour utilisation libft ds d'autres projets)
-$(NAME):	$(OBJS) $(OBJB)
-			@$(AR) $(NAME) $(OBJS) $(OBJB)
+$(NAME):	$(OBJS)
+			@$(AR) $(NAME) $(OBJS)
 			$(BUILT)
 
 %.o:		%.c
 			@$(CC) $(CFLAGS) -o $(<:.c=.o) -c $<
 
-test:		$(NAME) bonus
+test:		$(NAME)
 			@$(CC) $(CFLAGS) -o $(TNAME) $(MAIN) -L. -lft
 
-bonus:		$(OBJB)
-			@$(AR) $(NAME) $(OBJB)
-
 clean:
-			@$(RM) $(OBJS) $(OBJM) $(OBJB)
+			@$(RM) $(OBJS) $(OBJM)
 			$(CLEAN)
 
 fclean:		clean
